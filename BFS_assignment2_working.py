@@ -68,6 +68,7 @@ def main():
     nodes['f'].add_neighbour(nodes['b'])
 
 #Output the graphic connections
+    print()
     print("=== GRAPH CONNECTIONS ===")
     for name, node_obj in nodes.items():
         neigh_str = ', '.join(n.name for n in node_obj.neighbours)
@@ -112,7 +113,9 @@ def main():
     if cont == 'N':
         print("System Terminate!")
         exit()
-    print()
+    else:
+        main()
+        print()
 
 if __name__ == "__main__":
     main()
