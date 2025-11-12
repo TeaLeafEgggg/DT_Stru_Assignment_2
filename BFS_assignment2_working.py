@@ -14,17 +14,17 @@ class Node: #Required in the
     Object Name: it is the label of the node.  
     Object Neighbour: it is a list to add all collected node(s)
     '''
-    def __init__(self, name):
-        self.name = name
-        self.neighbours = []
+    def __init__(self, name): 
+        self.name = name # the label of the node
+        self.neighbours = [] # list to store neighbour nodes
     
-    def add_neighbour(self, neighbour_node):
-        if neighbour_node not in self.neighbours: 
-            self.neighbours.append(neighbour_node)
+    def add_neighbour(self, neighbour_node): 
+        if neighbour_node not in self.neighbours: # avoid duplicate neighbours 
+            self.neighbours.append(neighbour_node) # add neighbour node to the list
 
 #TODO: Install the BFS() here
 
-def BFS(start_node, target_node):
+def BFS(start_node, target_node): # define BFS function
     '''
     Perform Breadth-First Search (BFS) to find the shortest path from start_node to target_node.
     Without going back the path (as required in the assignment guidline).
@@ -37,13 +37,13 @@ def BFS(start_node, target_node):
     while queue:
         current_node, path = queue.popleft()  # Dequeue a node and the path to it
 
-        if current_node == target_node:
+        if current_node == target_node: # Check if we reached the target
             return path  # Return the path if target is found
 
         visited.add(current_node)  # Mark the current node as visited
 
-        for neighbour in current_node.neighbours:
-            if neighbour not in visited:
+        for neighbour in current_node.neighbours: # Explore each neighbour
+            if neighbour not in visited: # If neighbour hasn't been visited
                 queue.append((neighbour, path + [neighbour]))  # Enqueue unvisited neighbours with updated path
 
 
@@ -54,11 +54,12 @@ def main():
 # TODO: Use you created Class Node to creating Graph for Traversal
 
 #Create all Node Objects
-    nodes = {}
-    for char in 'abcdef':
-        nodes[char] = Node(char)
+    nodes = {} # dictionary to hold node objects
+    for char in 'abcdef': # create nodes a to f
+        nodes[char] = Node(char) # instantiate Node object
 
 #Use neighbour to create the graphic
+    # Define the graph connections according to the assignment requirement
     nodes['a'].add_neighbour(nodes['d'])
     nodes['b'].add_neighbour(nodes['d'])
     nodes['c'].add_neighbour(nodes['b'])
@@ -68,56 +69,61 @@ def main():
     nodes['f'].add_neighbour(nodes['b'])
 
 #Output the graphic connections
-    print()
-    print("=== GRAPH CONNECTIONS ===")
-    for name, node_obj in nodes.items():
-        neigh_str = ', '.join(n.name for n in node_obj.neighbours)
-        print(f"Node {name}: → {neigh_str}")
-    print("====================================\n")
+
+    print() 
+    print("=== GRAPH CONNECTIONS ===") # formatting for better readability
+    for name, node_obj in nodes.items(): # iterate through each node
+        neigh_str = ', '.join(n.name for n in node_obj.neighbours) # get neighbour names
+        print(f"Node {name}: → {neigh_str}") # print node and its neighbours
+    print("====================================\n") # formatting for better readability
+
 #====================================================
 
 # TODO: geting the source and destination
 # Note: your program needs to verify validate inputs, 
 # such as node such node in the graphic, the sourse and destination are the same!
-    while True:
-        while True:
-            src_start = input("Enter the source node: ").strip().lower()
-            if src_start in nodes:
-                break
-            print("Invalid source node. Please try again.")
-        while True:
-            dest_end = input("Enter the destination node: ").strip().lower()
-            if dest_end in nodes:
-                break
-            print("Invalid destination node. Please try again.")
-        if src_start == dest_end:
-            print("Source and destination cannot be the same. Please try again.")
+    '''
+    Loop until the program get valid source and destination nodes from user 
+    '''
+    while True: # loop until valid input is received
+        while True: # loop until valid source node is received
+            src_start = input("Enter the source node: ").strip().lower() # get source node user input
+            if src_start in nodes: # validate source node
+                break # exit loop if valid
+            print("Invalid source node. Please try again.") # error message for invalid input
+        while True: # loop until valid destination node is received
+            dest_end = input("Enter the destination node: ").strip().lower() # get destination node user input
+            if dest_end in nodes: # validate destination node
+                break # exit loop if valid
+            print("Invalid destination node. Please try again.") # error message for invalid input
+        if src_start == dest_end: # check if source and destination are the same
+            print("Source and destination cannot be the same. Please try again.") # if same, prompt user error message and continue the loop until valid input
         else:
-            break
+            break # exit loop if valid and source and destination nodes are different
 #=====================================================
 
 # TODO: BFS to find the path
 
-    path = BFS(nodes[src_start], nodes[dest_end])
+    path = BFS(nodes[src_start], nodes[dest_end]) # call BFS function to find path
 #=====================================================
 
 # TODO: Output the path if found
-    if path:
-        path_str = ' -> '.join(n.name for n in path)
-        print(f"Path found: {path_str}")
+    if path: # check if a path was found
+        path_str = ' -> '.join(n.name for n in path) # format the path for output
+        print(f"Path found: {path_str}") # print the found path
     else:
-        print("NO path found between the specified nodes.")
+        print("NO path found between the specified nodes.") # print message if no path found
 
 #=====================================================
-    cont = input("Will you want to continue? Y/N\n").strip().upper()
-    if cont == 'N':
-        print("System Terminate!")
-        exit()
-    else:
-        main()
-        print()
+    cont = input("Will you want to continue? Y/N\n").strip().upper() # ask user if they want to continue
+    if cont == 'N': # check if user wants to exit
+        print("System Terminate!") # print termination message
+        exit() # exit the program
+    else: # continue the loop
+        main() # restart the main function 
+        print() # formatting for better readability
 
 if __name__ == "__main__":
-    main()
+    main() # call main function to start the program
  
 
