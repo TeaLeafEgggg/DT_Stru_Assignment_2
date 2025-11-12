@@ -8,7 +8,7 @@ Class: Monday
 '''
 
 # TODO
-class Node: #Required in the 
+class Node:
     '''
     Define a Class call Node, that include two elements:
     Object Name: it is the label of the node.  
