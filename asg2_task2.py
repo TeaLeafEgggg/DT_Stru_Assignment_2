@@ -7,27 +7,28 @@ Class: Monday
 
 class Node:
     """
+    Attributes:
     - name         : node label ('a', 'b', ...)
     - neighbours   : list of connected Node objects
     - self.distance: distances (parallel list) to store km
     """
-    def __init__(self, name):
-        self.name = name
-        self.neighbours = []   # list of Node objects
-        self.distances = []    # list of km to each neighbour
+    def __init__(self, name): 
+        self.name = name       # Node label
+        self.neighbours = []   # List of Node objects
+        self.distances = []    # List of km to each neighbour
 
     def add_neighbour(self, neighbour_node, distance):
         """Add edge with distance"""
-        if neighbour_node not in self.neighbours: 
-            self.neighbours.append(neighbour_node) 
-            self.distances.append(distance)
+        if neighbour_node not in self.neighbours: # Avoid duplicate neighbours
+            self.neighbours.append(neighbour_node) # Add neighbour node
+            self.distances.append(distance) # Add corresponding distance
 
 
-def BFS(start_node, target_node):
-    """
+def BFS(start_node, target_node): # Perform BFS to find shortest path and total distance
+    """ 
     Returns: (path_list, total_km) or (None, None)
     """
-    from collections import deque
+    from collections import deque # Library for dequeuing from the left
 
     queue = deque([(start_node, [start_node], 0)])  # (node, path, distance)
     visited = {start_node} # Track visited nodes
@@ -60,26 +61,26 @@ def graph(): # Graph built for traversal *** not for output visualization ***
         ('f', 'b', 270)    # F to B
     ]
 
-    for src, dst, km in edges: 
+    for src, dst, km in edges:
         nodes[src].add_neighbour(nodes[dst], km) 
     return nodes
 
 
 def get_node(prompt): # Get valid node input from user
-    while True:
-        val = input(prompt).strip().lower()
-        if val in 'abcdef': # limiting user input to a, b, c, d, e, f 
-            return val # return valid node after checking else prompt error and let user input again
+    while True: # Loop until valid input
+        val = input(prompt).strip().lower() # Get user input and format it
+        if val in 'abcdef': # Limiting user input to a, b, c, d, e, f 
+            return val # Return valid node after checking else prompt error and let user input again
         print("ERROR: Invalid node! Must be a, b, c, d, e or f") # Prompt error message for invalid user input
 
 
-def main():
-    print()
-    print("=" * 60)
-    print("INT3086 ASSIGNMENT 2 - TASK 2: BFS WITH DISTANCE")
+def main(): # Main program function
+    print() # Formatting for better readability
+    print("=" * 60) # Formatting for better readability
+    print("INT3086 ASSIGNMENT 2 - TASK 2: BFS WITH DISTANCE") # Title of the program
     print("Name: Oscar Ng Cheuk Hau")
-    print("Graph follows the diagram given in the assignment guidline.")
-    print("=" * 60)
+    print("Graph follows the diagram given in the assignment guidline.") # Information about the graph
+    print("=" * 60) # Formatting for better readability
 
     nodes = graph() # Set the graph for traversal 
 
@@ -96,8 +97,8 @@ def main():
         S = start.upper() # Formatting the start node input
         E = dest.upper() # Formatting the end node input
 
-        if path_nodes: 
-            path_str = " → ".join(n.name.upper() for n in path_nodes)
+        if path_nodes: # If a path is found
+            path_str = " → ".join(n.name.upper() for n in path_nodes) # Build the path string for user to see
 
             breakdown = [] # Build the breakdown of distances for user to see
             for i in range(len(path_nodes) - 1):
@@ -116,17 +117,17 @@ def main():
 
         # Continue or Ternminate
         while True: 
-            choice = input("\nWill you want to continue? Y/N ").strip().upper()
-            if choice in ('Y', 'N'):
-                break
-            print("ERROR: Please enter Y or N")
+            choice = input("\nWill you want to continue? Y/N ").strip().upper() # Ask user if they want to continue
+            if choice in ('Y', 'N'): # Validate user input
+                break # Exit loop if valid input
+            print("ERROR: Please enter Y or N") # Prompt error message for invalid input
 
-        if choice == 'N':
-            print("Thank you for using!")
-            break
+        if choice == 'N': # If user wants to exit & typed N
+            print("Thank you for using!") # Print termination message
+            break # Terminate the program
         else:
             main() # Restart the main function for new input
 
 
 if __name__ == "__main__":
-    main()
+    main() # Call main function to start the program
