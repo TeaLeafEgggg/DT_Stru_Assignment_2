@@ -32,7 +32,7 @@ def BFS(start_node, target_node): # define BFS function
     from collections import deque #import deque from collections module for easier queue processing in FIFO
     
     visited = set()  # Set to keep track of visited nodes
-    queue = deque([(start_node, [start_node])])  # Queue for BFS,
+    queue = deque([(start_node, [start_node])])  # (node, path)
 
     while queue:
         current_node, path = queue.popleft()  # Dequeue a node and the path to it
@@ -49,7 +49,11 @@ def BFS(start_node, target_node): # define BFS function
 
 # Main Program: test the BFS implementation
 def main():
-    
+    print() # Formatting for better readability
+    print("=" * 60) # Formatting for better readability
+    print("INT3086 ASSIGNMENT 2 - TASK 1: BFS") # Title of the program
+    print("Name: Oscar Ng Cheuk Hau")
+    print("=" * 60) # Formatting for better readability
 #====================================================
 # TODO: Use you created Class Node to creating Graph for Traversal
 
@@ -70,11 +74,12 @@ def main():
 
 #Output the graphic connections
 
-    print() 
+    print()
+    print("====================================\n") # formatting for better readability
     print("=== GRAPH CONNECTIONS ===") # formatting for better readability
     for name, node_obj in nodes.items(): # iterate through each node
-        neigh_str = ', '.join(n.name for n in node_obj.neighbours) # get neighbour names
-        print(f"Node {name}: → {neigh_str}") # print node and its neighbours
+        neigh_str = ', '.join(n.name.upper() for n in node_obj.neighbours) # get neighbour names
+        print(f"Node {name.upper()} → {neigh_str}") # print node and its neighbours
     print("====================================\n") # formatting for better readability
 
 #====================================================
@@ -109,7 +114,7 @@ def main():
 
 # TODO: Output the path if found
     if path: # check if a path was found
-        path_str = ' -> '.join(n.name for n in path) # format the path for output
+        path_str = ' -> '.join(n.name.upper() for n in path) # format the path for output
         print(f"Path found: {path_str}") # print the found path
     else:
         print("NO path found between the specified nodes.") # print message if no path found

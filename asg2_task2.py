@@ -10,7 +10,7 @@ class Node:
     Attributes:
     - name         : node label ('a', 'b', ...)
     - neighbours   : list of connected Node objects
-    - self.distance: distances (parallel list) to store km
+    - self.distances: distances (parallel list) to store km
     """
     def __init__(self, name): 
         self.name = name       # Node label
@@ -24,14 +24,14 @@ class Node:
             self.distances.append(distance) # Add corresponding distance
 
 
-def BFS(start_node, target_node): # Perform BFS to find shortest path and total distance
+def BFS(start_node, target_node): # Define BFS function
     """ 
     Returns: (path_list, total_km) or (None, None)
     """
     from collections import deque # Library for dequeuing from the left
 
-    queue = deque([(start_node, [start_node], 0)])  # (node, path, distance)
     visited = {start_node} # Track visited nodes
+    queue = deque([(start_node, [start_node], 0)])  # (node, path, distance)
 
     while queue: # While there are nodes in the queue
         current, path, dist = queue.popleft() # Dequeue until there is no node left
@@ -48,7 +48,7 @@ def BFS(start_node, target_node): # Perform BFS to find shortest path and total 
     return None, None # No such path and thus no distance output 
 
 
-def graph(): # Graph built for traversal *** not for output visualization ***
+def graph(): # Graph built for traversal
     nodes = {ch: Node(ch) for ch in 'abcdef'} 
 
     edges = [ # Data from the guidline. The data is follwing: (start, destination, distance)
@@ -65,6 +65,20 @@ def graph(): # Graph built for traversal *** not for output visualization ***
         nodes[src].add_neighbour(nodes[dst], km) 
     return nodes
 
+def print_graph(nodes): # Print the graph connections
+    print() # Formatting for better readability
+    print("====================================\n") # formatting for better readability
+    print("=== GRAPH CONNECTIONS ===") # formatting for better readability
+    for node in nodes.values(): # iterate through each node
+        neigh_names = [n.name.upper() for n in node.neighbours] # get neighbour names in uppercase
+        dist_list = [f"{d}km" for d in node.distances] # get distances in km format
+
+        # Format: Node [A] → [D], [F] ; 110km, 311km
+        neigh_str = ', '.join(f"[{n}]" for n in neigh_names)
+        dist_str = ', '.join(dist_list)
+
+        print(f"Node [{node.name.upper()}] → {neigh_str} ; {dist_str}") # print node and its neighbours with distances
+    print("====================================\n") # formatting for better readability
 
 def get_node(prompt): # Get valid node input from user
     while True: # Loop until valid input
@@ -79,10 +93,10 @@ def main(): # Main program function
     print("=" * 60) # Formatting for better readability
     print("INT3086 ASSIGNMENT 2 - TASK 2: BFS WITH DISTANCE") # Title of the program
     print("Name: Oscar Ng Cheuk Hau")
-    print("Graph follows the diagram given in the assignment guidline.") # Information about the graph
     print("=" * 60) # Formatting for better readability
-
     nodes = graph() # Set the graph for traversal 
+
+    print_graph(nodes) # Print the graph connections for user to see
 
     while True: # Main loop for user interaction
         start = get_node("Please start [a to f]:--> ") # Getting the starting node from user with validation checking
