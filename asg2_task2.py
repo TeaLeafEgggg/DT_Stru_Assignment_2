@@ -10,7 +10,7 @@ class Node:
     Attributes:
     - name         : node label ('a', 'b', ...)
     - neighbours   : list of connected Node objects
-    - self.distances: distances (parallel list) to store km
+    - distances    : distances (parallel list) to store km
     """
     def __init__(self, name): 
         self.name = name       # Node label
@@ -45,7 +45,6 @@ def BFS(start_node, target_node): # Define BFS function
                 visited.add(neigh) # Mark neighbour as visited
                 queue.append((neigh, path + [neigh], dist + km)) # Enqueue neighbour with updated path and distance to the output queue
 
-    return None, None # No such path and thus no distance output 
 
 
 def graph(): # Graph built for traversal
@@ -94,7 +93,7 @@ def main(): # Main program function
     print("INT3086 ASSIGNMENT 2 - TASK 2: BFS WITH DISTANCE") # Title of the program
     print("Name: Oscar Ng Cheuk Hau")
     print("=" * 60) # Formatting for better readability
-    nodes = graph() # Set the graph for traversal 
+    nodes = graph() # Use the graph for traversal 
 
     print_graph(nodes) # Print the graph connections for user to see
 
@@ -131,14 +130,14 @@ def main(): # Main program function
 
         # Continue or Ternminate
         while True: 
-            choice = input("\nWill you want to continue? Y/N ").strip().upper() # Ask user if they want to continue
+            choice = input("\nDo you want to continue? Y/N ").strip().upper() # Ask user if they want to continue
             if choice in ('Y', 'N'): # Validate user input
                 break # Exit loop if valid input
             print("ERROR: Please enter Y or N") # Prompt error message for invalid input
 
         if choice == 'N': # If user wants to exit & typed N
             print("Thank you for using!") # Print termination message
-            break # Terminate the program
+            exit() # Terminate the program
         else:
             main() # Restart the main function for new input
 

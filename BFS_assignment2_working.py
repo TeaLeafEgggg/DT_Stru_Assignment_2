@@ -120,15 +120,19 @@ def main():
         print("NO path found between the specified nodes.") # print message if no path found
 
 #=====================================================
-    cont = input("Will you want to continue? Y/N\n").strip().upper() # ask user if they want to continue
-    if cont == 'N': # check if user wants to exit
-        print("System Terminate!") # print termination message
-        exit() # exit the program
-    else: # continue the loop
-        main() # restart the main function 
-        print() # formatting for better readability
+    while True: # loop until valid input is received
+        cont = input("Will you want to continue? Y/N\n").strip().upper() # ask user if they want to continue
+        if cont not in ('Y', 'N'): # validate user input
+            print("Invalid input! Please enter Y or N.") # prompt error message for invalid input
+        else:
+            break # exit loop if valid input is received
+        
+    if cont == 'N': # if user wants to exit
+            print("Thank you for using!") # print termination message
+            exit() # terminate the program
+    else:
+        main()
+        print()
 
 if __name__ == "__main__":
     main() # call main function to start the program
- 
-
